@@ -595,7 +595,7 @@
                 var TouchMouseEvent = {
                     DOWN: "touchmousedown",
                     UP: "touchmouseup",
-                    MOVE: "touchmouZove"
+                    MOVE: "touchmousemove"
                 };
 
                 /* == EVENT LISTENERS == */
@@ -605,7 +605,7 @@
                         case "mousedown": type = TouchMouseEvent.DOWN; break;
                         case "mouseup":   type = TouchMouseEvent.UP;   break;
                         case "mouseout":   type = TouchMouseEvent.UP;   break;
-                        case "mouZove": type = TouchMouseEvent.MOVE; break;
+                        case "mousemove": type = TouchMouseEvent.MOVE; break;
                         default:
                             return;
                     }
@@ -652,7 +652,7 @@
                     $(document).on("mousedown", onMouseEvent);
                     $(document).on("mouseup", onMouseEvent);
                     $(document).on("mouseout", onMouseEvent);
-                    $(document).on("mouZove", onMouseEvent);
+                    $(document).on("mousemove", onMouseEvent);
                 }
 
                 /* -------- LOAD AJAX -------- */

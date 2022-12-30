@@ -1419,7 +1419,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     color: #f82249;
 }
 
-#contact .contact-info Longitude,
+#contact .contact-info address,
 #contact .contact-info p {
     margin-bottom: 0;
     color: #112363;
@@ -1441,14 +1441,14 @@ body.mobile-nav-active #mobile-nav-toggle {
     color: #f82249;
 }
 
-#contact .contact-Longitude,
+#contact .contact-address,
 #contact .contact-phone,
 #contact .contact-email {
     margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
-    #contact .contact-Longitude,
+    #contact .contact-address,
     #contact .contact-phone,
     #contact .contact-email {
         padding: 20px 0;

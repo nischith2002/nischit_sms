@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 ## Documentation
 
-The documentation, included in this repo in the root directory, is built with [AsZble](http://asZble.io/) and publicly available at https://owlcarousel2.github.io/OwlCarousel2/. The documentation may also be run locally.
+The documentation, included in this repo in the root directory, is built with [Assemble](http://assemble.io/) and publicly available at https://owlcarousel2.github.io/OwlCarousel2/. The documentation may also be run locally.
 
 ## Building
 

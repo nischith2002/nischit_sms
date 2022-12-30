@@ -31,10 +31,10 @@ Add Attendance
 <form action="/addattendance" method="post">
 
 <div class="form-group">                          
-<select class="form-control" id="X" name="X"  required>
-        <option selected>Select X</option>
+<select class="form-control" id="XAxis" name="XAxis"  required>
+        <option selected>Select XAxis</option>
         {% for r in query  %}
-        <option value="{{r.X}}">{{r.X}}</option>
+        <option value="{{r.XAxis}}">{{r.XAxis}}</option>
         {% endfor %}
       </select>
  </div>
@@ -42,7 +42,7 @@ Add Attendance
 
 <div class="form-group">
 <label for="attendance">Attendance Percentage</label>
-<input type="Latitude" class="form-control" name="attend" id="attend">
+<input type="number" class="form-control" name="attend" id="attend">
 </div>
 <br>
 

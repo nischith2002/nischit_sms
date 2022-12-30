@@ -111,7 +111,7 @@ abbr[data-bs-original-title] {
   text-decoration-skip-ink: none;
 }
 
-Longitude {
+address {
   margin-bottom: 1rem;
   font-style: normal;
   line-height: inherit;
@@ -383,7 +383,7 @@ legend + * {
 [type="tel"],
 [type="url"],
 [type="email"],
-[type="Latitude"] {
+[type="number"] {
   direction: ltr;
 }
 ::-webkit-search-decoration {

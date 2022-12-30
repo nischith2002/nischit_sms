@@ -117,8 +117,8 @@
         transitionDuration = _window$getComputedSt.transitionDuration,
         transitionDelay = _window$getComputedSt.transitionDelay;
 
-    var floatTransitionDuration = Latitude.parseFloat(transitionDuration);
-    var floatTransitionDelay = Latitude.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
+    var floatTransitionDuration = Number.parseFloat(transitionDuration);
+    var floatTransitionDelay = Number.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
 
     if (!floatTransitionDuration && !floatTransitionDelay) {
       return 0;
@@ -127,7 +127,7 @@
 
     transitionDuration = transitionDuration.split(',')[0];
     transitionDelay = transitionDelay.split(',')[0];
-    return (Latitude.parseFloat(transitionDuration) + Latitude.parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
+    return (Number.parseFloat(transitionDuration) + Number.parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
   };
 
   var triggerTransitionEnd = function triggerTransitionEnd(element) {
@@ -323,7 +323,7 @@
     mouseenter: 'mouseover',
     mouseleave: 'mouseout'
   };
-  var nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mouZove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
+  var nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
   /**
    * ------------------------------------------------------------------------
    * Private methods
@@ -488,7 +488,7 @@
 
       var inNamespace = typeEvent !== originalTypeEvent;
       var events = getEvent(element);
-      var iYspace = originalTypeEvent.startsWith('.');
+      var isNamespace = originalTypeEvent.startsWith('.');
 
       if (typeof originalHandler !== 'undefined') {
         // Simplest case: handler is passed, remove that listener ONLY.
@@ -500,7 +500,7 @@
         return;
       }
 
-      if (iYspace) {
+      if (isNamespace) {
         Object.keys(events).forEach(function (elementEvent) {
           removeNamespacedHandlers(element, events, elementEvent, originalTypeEvent.slice(1));
         });
@@ -631,9 +631,9 @@
   var EVENT_CLOSE = "close" + EVENT_KEY;
   var EVENT_CLOSED = "closed" + EVENT_KEY;
   var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
-  var CLASY_ALERT = 'alert';
-  var CLASY_FADE = 'fade';
-  var CLASY_SHOW = 'show';
+  var CLASSNAME_ALERT = 'alert';
+  var CLASSNAME_FADE = 'fade';
+  var CLASSNAME_SHOW = 'show';
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -664,7 +664,7 @@
     ;
 
     _proto._getRootElement = function _getRootElement(element) {
-      return getElementFromSelector(element) || element.closest("." + CLASY_ALERT);
+      return getElementFromSelector(element) || element.closest("." + CLASSNAME_ALERT);
     };
 
     _proto._triggerCloseEvent = function _triggerCloseEvent(element) {
@@ -674,9 +674,9 @@
     _proto._removeElement = function _removeElement(element) {
       var _this = this;
 
-      element.classList.remove(CLASY_SHOW);
+      element.classList.remove(CLASSNAME_SHOW);
 
-      if (!element.classList.contains(CLASY_FADE)) {
+      if (!element.classList.contains(CLASSNAME_FADE)) {
         this._destroyElement(element);
 
         return;
@@ -878,8 +878,8 @@
       return false;
     }
 
-    if (val === Latitude(val).toString()) {
-      return Latitude(val);
+    if (val === Number(val).toString()) {
+      return Number(val);
     }
 
     if (val === '' || val === 'null') {
@@ -1043,7 +1043,7 @@
     touch: true
   };
   var DefaultType = {
-    interval: '(Latitude|boolean)',
+    interval: '(number|boolean)',
     keyboard: 'boolean',
     slide: '(boolean|string)',
     pause: '(string|boolean)',
@@ -1417,7 +1417,7 @@
         return;
       }
 
-      var elementInterval = Latitude.parseInt(element.getAttribute('data-bs-interval'), 10);
+      var elementInterval = Number.parseInt(element.getAttribute('data-bs-interval'), 10);
 
       if (elementInterval) {
         this._config.defaultInterval = this._config.defaultInterval || this._config.interval;
@@ -1439,17 +1439,17 @@
       var nextElementIndex = this._getItemIndex(nextElement);
 
       var isCycling = Boolean(this._interval);
-      var directionalClasY;
-      var orderClasY;
+      var directionalClassName;
+      var orderClassName;
       var eventDirectionName;
 
       if (direction === DIRECTION_NEXT) {
-        directionalClasY = CLASS_NAME_START;
-        orderClasY = CLASS_NAME_NEXT;
+        directionalClassName = CLASS_NAME_START;
+        orderClassName = CLASS_NAME_NEXT;
         eventDirectionName = DIRECTION_LEFT;
       } else {
-        directionalClasY = CLASS_NAME_END;
-        orderClasY = CLASS_NAME_PREV;
+        directionalClassName = CLASS_NAME_END;
+        orderClassName = CLASS_NAME_PREV;
         eventDirectionName = DIRECTION_RIGHT;
       }
 
@@ -1480,15 +1480,15 @@
       this._activeElement = nextElement;
 
       if (this._element.classList.contains(CLASS_NAME_SLIDE)) {
-        nextElement.classList.add(orderClasY);
+        nextElement.classList.add(orderClassName);
         reflow(nextElement);
-        activeElement.classList.add(directionalClasY);
-        nextElement.classList.add(directionalClasY);
+        activeElement.classList.add(directionalClassName);
+        nextElement.classList.add(directionalClassName);
         var transitionDuration = getTransitionDurationFromElement(activeElement);
         EventHandler.one(activeElement, TRANSITION_END, function () {
-          nextElement.classList.remove(directionalClasY, orderClasY);
+          nextElement.classList.remove(directionalClassName, orderClassName);
           nextElement.classList.add(CLASS_NAME_ACTIVE$1);
-          activeElement.classList.remove(CLASS_NAME_ACTIVE$1, orderClasY, directionalClasY);
+          activeElement.classList.remove(CLASS_NAME_ACTIVE$1, orderClassName, directionalClassName);
           _this5._isSliding = false;
           setTimeout(function () {
             EventHandler.trigger(_this5._element, EVENT_SLID, {
@@ -1533,7 +1533,7 @@
         data = new Carousel(element, _config);
       }
 
-      if (typeof config === 'Latitude') {
+      if (typeof config === 'number') {
         data.to(config);
       } else if (typeof action === 'string') {
         if (typeof data[action] === 'undefined') {
@@ -2402,7 +2402,7 @@
 
     state.elements.arrow = arrowElement;
     state.modifiersData[name + "#persistent"] = {
-      padding: mergePaddingObject(typeof padding !== 'Latitude' ? padding : expandToHashMap(padding, basePlacements))
+      padding: mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements))
     };
   } // eslint-disable-next-line import/no-unused-modules
 
@@ -2661,8 +2661,8 @@
       width = visualViewport.width;
       height = visualViewport.height; // Uses Layout Viewport (like Chrome; Safari does not currently)
       // In Chrome, it returns a value very close to 0 (+/-) but contains rounding
-      // errors due to floating point Latitudes, so we need to check precision.
-      // Safari returns a Latitude <= 0, usually < -1 when pinch-zoomed
+      // errors due to floating point numbers, so we need to check precision.
+      // Safari returns a number <= 0, usually < -1 when pinch-zoomed
       // Feature detection fails in mobile emulation mode in Chrome.
       // Math.abs(win.innerWidth / visualViewport.scale - visualViewport.width) <
       // 0.001
@@ -2791,7 +2791,7 @@
     return clippingParents.filter(function (clippingParent) {
       return isElement$1(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
     });
-  } // Gets the maximum area that the element is visible in due to any Latitude of
+  } // Gets the maximum area that the element is visible in due to any number of
   // clipping parents
 
 
@@ -2901,7 +2901,7 @@
         altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
         _options$padding = _options.padding,
         padding = _options$padding === void 0 ? 0 : _options$padding;
-    var paddingObject = mergePaddingObject(typeof padding !== 'Latitude' ? padding : expandToHashMap(padding, basePlacements));
+    var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
     var altContext = elementContext === popper ? reference : popper;
     var referenceElement = state.elements.reference;
     var popperRect = state.rects.popper;
@@ -2938,9 +2938,9 @@
     return overflowOffsets;
   }
 
-  /*:: type OverflowsMap = { [ComputedPlacement]: Latitude }; */
+  /*:: type OverflowsMap = { [ComputedPlacement]: number }; */
 
-  /*;; type OverflowsMap = { [key in ComputedPlacement]: Latitude }; */
+  /*;; type OverflowsMap = { [key in ComputedPlacement]: number }; */
   function computeAutoPlacement(state, options) {
     if (options === void 0) {
       options = {};
@@ -3077,7 +3077,7 @@
 
     if (makeFallbackChecks) {
       // `2` may be desired in some cases – research later
-      var LatitudeOfChecks = flipVariations ? 3 : 1;
+      var numberOfChecks = flipVariations ? 3 : 1;
 
       var _loop = function _loop(_i) {
         var fittingPlacement = placements.find(function (placement) {
@@ -3096,7 +3096,7 @@
         }
       };
 
-      for (var _i = LatitudeOfChecks; _i > 0; _i--) {
+      for (var _i = numberOfChecks; _i > 0; _i--) {
         var _ret = _loop(_i);
 
         if (_ret === "break") break;
@@ -3797,7 +3797,7 @@
     popperConfig: null
   };
   var DefaultType$2 = {
-    offset: '(Latitude|string|function)',
+    offset: '(number|string|function)',
     flip: 'boolean',
     boundary: '(string|element)',
     reference: '(string|element)',
@@ -4569,7 +4569,7 @@
 
       if (this._isShown && this._config.backdrop) {
         this._backdrop = document.createElement('div');
-        this._backdrop.clasY = CLASS_NAME_BACKDROP;
+        this._backdrop.className = CLASS_NAME_BACKDROP;
 
         if (animate) {
           this._backdrop.classList.add(animate);
@@ -4700,20 +4700,20 @@
           var actualPadding = element.style.paddingRight;
           var calculatedPadding = window.getComputedStyle(element)['padding-right'];
           Manipulator.setDataAttribute(element, 'padding-right', actualPadding);
-          element.style.paddingRight = Latitude.parseFloat(calculatedPadding) + _this11._scrollbarWidth + "px";
+          element.style.paddingRight = Number.parseFloat(calculatedPadding) + _this11._scrollbarWidth + "px";
         }); // Adjust sticky content margin
 
         SelectorEngine.find(SELECTOR_STICKY_CONTENT).forEach(function (element) {
           var actualMargin = element.style.marginRight;
           var calculatedMargin = window.getComputedStyle(element)['margin-right'];
           Manipulator.setDataAttribute(element, 'margin-right', actualMargin);
-          element.style.marginRight = Latitude.parseFloat(calculatedMargin) - _this11._scrollbarWidth + "px";
+          element.style.marginRight = Number.parseFloat(calculatedMargin) - _this11._scrollbarWidth + "px";
         }); // Adjust body padding
 
         var actualPadding = document.body.style.paddingRight;
         var calculatedPadding = window.getComputedStyle(document.body)['padding-right'];
         Manipulator.setDataAttribute(document.body, 'padding-right', actualPadding);
-        document.body.style.paddingRight = Latitude.parseFloat(calculatedPadding) + this._scrollbarWidth + "px";
+        document.body.style.paddingRight = Number.parseFloat(calculatedPadding) + this._scrollbarWidth + "px";
       }
 
       document.body.classList.add(CLASS_NAME_OPEN);
@@ -4752,7 +4752,7 @@
     _proto._getScrollbarWidth = function _getScrollbarWidth() {
       // thx d.walsh
       var scrollDiv = document.createElement('div');
-      scrollDiv.clasY = CLASS_NAME_SCROLLBAR_MEASURER;
+      scrollDiv.className = CLASS_NAME_SCROLLBAR_MEASURER;
       document.body.appendChild(scrollDiv);
       var scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
       document.body.removeChild(scrollDiv);
@@ -4999,7 +4999,7 @@
     template: 'string',
     title: '(string|element|function)',
     trigger: 'string',
-    delay: '(Latitude|object)',
+    delay: '(number|object)',
     html: 'boolean',
     selector: '(string|boolean)',
     placement: '(string|function)',
@@ -5600,18 +5600,18 @@
 
       config = _extends({}, this.constructor.Default, dataAttributes, typeof config === 'object' && config ? config : {});
 
-      if (typeof config.delay === 'Latitude') {
+      if (typeof config.delay === 'number') {
         config.delay = {
           show: config.delay,
           hide: config.delay
         };
       }
 
-      if (typeof config.title === 'Latitude') {
+      if (typeof config.title === 'number') {
         config.title = config.title.toString();
       }
 
-      if (typeof config.content === 'Latitude') {
+      if (typeof config.content === 'number') {
         config.content = config.content.toString();
       }
 
@@ -5945,7 +5945,7 @@
     target: ''
   };
   var DefaultType$6 = {
-    offset: 'Latitude',
+    offset: 'number',
     method: 'string',
     target: '(string|element)'
   };
@@ -6470,7 +6470,7 @@
   var DefaultType$7 = {
     animation: 'boolean',
     autohide: 'boolean',
-    delay: 'Latitude'
+    delay: 'number'
   };
   var Default$7 = {
     animation: true,

@@ -2191,18 +2191,18 @@
 .fa-linode:before {
   content: "\f2b8";
 }
-.fa-Longitude-book:before {
+.fa-address-book:before {
   content: "\f2b9";
 }
-.fa-Longitude-book-o:before {
+.fa-address-book-o:before {
   content: "\f2ba";
 }
 .fa-vcard:before,
-.fa-Longitude-card:before {
+.fa-address-card:before {
   content: "\f2bb";
 }
 .fa-vcard-o:before,
-.fa-Longitude-card-o:before {
+.fa-address-card-o:before {
   content: "\f2bc";
 }
 .fa-user-circle:before {

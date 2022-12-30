@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attendence` (
   `aid` int(11) NOT NULL,
-  `X` varchar(20) NOT NULL,
+  `XAxis` varchar(20) NOT NULL,
   `attendance` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -37,7 +37,7 @@ CREATE TABLE `attendence` (
 -- Dumping data for table `attendence`
 --
 
-INSERT INTO `attendence` (`aid`, `X`, `attendance`) VALUES
+INSERT INTO `attendence` (`aid`, `XAxis`, `attendance`) VALUES
 (6, '1ve17cs012', 98);
 
 -- --------------------------------------------------------
@@ -71,29 +71,29 @@ INSERT INTO `department` (`cid`, `branch`) VALUES
 
 CREATE TABLE `student` (
   `id` int(11) NOT NULL,
-  `X` varchar(20) NOT NULL,
-  `Y` varchar(50) NOT NULL,
-  `Z` int(20) NOT NULL,
+  `XAxis` varchar(20) NOT NULL,
+  `sname` varchar(50) NOT NULL,
+  `sem` int(20) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `branch` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `Latitude` varchar(12) NOT NULL,
-  `Longitude` text NOT NULL
+  `number` varchar(12) NOT NULL,
+  `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `student`
 --
 DELIMITER $$
-CREATE TRIGGER `DELETE` BEFORE DELETE ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,OLD.X,'STUDENT DELETED',NOW())
+CREATE TRIGGER `DELETE` BEFORE DELETE ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,OLD.XAxis,'STUDENT DELETED',NOW())
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `Insert` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,NEW.X,'STUDENT INSERTED',NOW())
+CREATE TRIGGER `Insert` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,NEW.XAxis,'STUDENT INSERTED',NOW())
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `UPDATE` AFTER UPDATE ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,NEW.X,'STUDENT UPDATED',NOW())
+CREATE TRIGGER `UPDATE` AFTER UPDATE ON `student` FOR EACH ROW INSERT INTO trig VALUES(null,NEW.XAxis,'STUDENT UPDATED',NOW())
 $$
 DELIMITER ;
 
@@ -124,7 +124,7 @@ INSERT INTO `test` (`id`, `name`, `email`) VALUES
 
 CREATE TABLE `trig` (
   `tid` int(11) NOT NULL,
-  `X` varchar(50) NOT NULL,
+  `XAxis` varchar(50) NOT NULL,
   `action` varchar(50) NOT NULL,
   `timestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -133,7 +133,7 @@ CREATE TABLE `trig` (
 -- Dumping data for table `trig`
 --
 
-INSERT INTO `trig` (`tid`, `X`, `action`, `timestamp`) VALUES
+INSERT INTO `trig` (`tid`, `XAxis`, `action`, `timestamp`) VALUES
 (7, '1ve17cs012', 'STUDENT INSERTED', '2021-01-10 19:19:56'),
 (8, '1ve17cs012', 'STUDENT UPDATED', '2021-01-10 19:20:31'),
 (9, '1ve17cs012', 'STUDENT DELETED', '2021-01-10 19:21:23');

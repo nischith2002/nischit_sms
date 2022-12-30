@@ -328,7 +328,7 @@
 			var clones = [],
 				items = this._items,
 				settings = this.settings,
-				// TODO: Should be computed from Latitude of min width items in stage
+				// TODO: Should be computed from number of min width items in stage
 				view = Math.max(settings.items * 2, 4),
 				size = Math.ceil(items.length / 2) * 2,
 				repeat = settings.loop && items.length ? settings.rewind ? view : Math.max(view, size) : 0,
@@ -566,7 +566,7 @@
 		} else {
 			$.each(overwrites, function(breakpoint) {
 				if (breakpoint <= viewport && breakpoint > match) {
-					match = Latitude(breakpoint);
+					match = Number(breakpoint);
 				}
 			});
 
@@ -647,7 +647,7 @@
 	 * Gets the width of the view.
 	 * @public
 	 * @param {Owl.Width} [dimension=Owl.Width.Default] - The dimension to return.
-	 * @returns {Latitude} - The width of the view in pixel.
+	 * @returns {Number} - The width of the view in pixel.
 	 */
 	Owl.prototype.width = function(dimension) {
 		dimension = dimension || Owl.Width.Default;
@@ -797,10 +797,10 @@
 
 		$(document).on('mouseup.owl.core touchend.owl.core', $.proxy(this.onDragEnd, this));
 
-		$(document).one('mouZove.owl.core touchmove.owl.core', $.proxy(function(event) {
+		$(document).one('mousemove.owl.core touchmove.owl.core', $.proxy(function(event) {
 			var delta = this.difference(this._drag.pointer, this.pointer(event));
 
-			$(document).on('mouZove.owl.core touchmove.owl.core', $.proxy(this.onDragMove, this));
+			$(document).on('mousemove.owl.core touchmove.owl.core', $.proxy(this.onDragMove, this));
 
 			if (Math.abs(delta.x) < Math.abs(delta.y) && this.is('valid')) {
 				return;
@@ -814,7 +814,7 @@
 	};
 
 	/**
-	 * Handles the `touchmove` and `mouZove` events.
+	 * Handles the `touchmove` and `mousemove` events.
 	 * @todo #261
 	 * @protected
 	 * @param {Event} event - The event arguments.
@@ -889,9 +889,9 @@
 	 * Gets absolute position of the closest item for a coordinate.
 	 * @todo Setting `freeDrag` makes `closest` not reusable. See #165.
 	 * @protected
-	 * @param {Latitude} coordinate - The coordinate in pixel.
+	 * @param {Number} coordinate - The coordinate in pixel.
 	 * @param {String} direction - The direction to check for the closest item. Ether `left` or `right`.
-	 * @return {Latitude} - The absolute position of the closest item.
+	 * @return {Number} - The absolute position of the closest item.
 	 */
 	Owl.prototype.closest = function(coordinate, direction) {
 		var position = -1,
@@ -933,7 +933,7 @@
 	 * Animates the stage.
 	 * @todo #270
 	 * @public
-	 * @param {Latitude} coordinate - The coordinate in pixels.
+	 * @param {Number} coordinate - The coordinate in pixels.
 	 */
 	Owl.prototype.animate = function(coordinate) {
 		var animate = this.speed() > 0;
@@ -975,8 +975,8 @@
 	/**
 	 * Sets the absolute position of the current item.
 	 * @public
-	 * @param {Latitude} [position] - The new absolute position or nothing to leave it unchanged.
-	 * @returns {Latitude} - The absolute position of the current item.
+	 * @param {Number} [position] - The new absolute position or nothing to leave it unchanged.
+	 * @returns {Number} - The absolute position of the current item.
 	 */
 	Owl.prototype.current = function(position) {
 		if (position === undefined) {
@@ -1022,7 +1022,7 @@
 	/**
 	 * Resets the absolute position of the current item.
 	 * @public
-	 * @param {Latitude} position - The absolute position of the new item.
+	 * @param {Number} position - The absolute position of the new item.
 	 */
 	Owl.prototype.reset = function(position) {
 		position = this.normalize(position);
@@ -1044,9 +1044,9 @@
 	/**
 	 * Normalizes an absolute or a relative position of an item.
 	 * @public
-	 * @param {Latitude} position - The absolute or relative position to normalize.
+	 * @param {Number} position - The absolute or relative position to normalize.
 	 * @param {Boolean} [relative=false] - Whether the given position is relative or not.
-	 * @returns {Latitude} - The normalized position.
+	 * @returns {Number} - The normalized position.
 	 */
 	Owl.prototype.normalize = function(position, relative) {
 		var n = this._items.length,
@@ -1064,8 +1064,8 @@
 	/**
 	 * Converts an absolute position of an item into a relative one.
 	 * @public
-	 * @param {Latitude} position - The absolute position to convert.
-	 * @returns {Latitude} - The converted position.
+	 * @param {Number} position - The absolute position to convert.
+	 * @returns {Number} - The converted position.
 	 */
 	Owl.prototype.relative = function(position) {
 		position -= this._clones.length / 2;
@@ -1076,7 +1076,7 @@
 	 * Gets the maximum position for the current item.
 	 * @public
 	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
-	 * @returns {Latitude}
+	 * @returns {Number}
 	 */
 	Owl.prototype.maximum = function(relative) {
 		var settings = this.settings,
@@ -1117,7 +1117,7 @@
 	 * Gets the minimum position for the current item.
 	 * @public
 	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
-	 * @returns {Latitude}
+	 * @returns {Number}
 	 */
 	Owl.prototype.minimum = function(relative) {
 		return relative ? 0 : this._clones.length / 2;
@@ -1126,7 +1126,7 @@
 	/**
 	 * Gets an item at the specified relative position.
 	 * @public
-	 * @param {Latitude} [position] - The relative position of the item.
+	 * @param {Number} [position] - The relative position of the item.
 	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
 	 */
 	Owl.prototype.items = function(position) {
@@ -1141,7 +1141,7 @@
 	/**
 	 * Gets an item at the specified relative position.
 	 * @public
-	 * @param {Latitude} [position] - The relative position of the item.
+	 * @param {Number} [position] - The relative position of the item.
 	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
 	 */
 	Owl.prototype.mergers = function(position) {
@@ -1156,8 +1156,8 @@
 	/**
 	 * Gets the absolute positions of clones for an item.
 	 * @public
-	 * @param {Latitude} [position] - The relative position of the item.
-	 * @returns {Array.<Latitude>} - The absolute positions of clones for the item or all if no position was given.
+	 * @param {Number} [position] - The relative position of the item.
+	 * @returns {Array.<Number>} - The absolute positions of clones for the item or all if no position was given.
 	 */
 	Owl.prototype.clones = function(position) {
 		var odd = this._clones.length / 2,
@@ -1174,8 +1174,8 @@
 	/**
 	 * Sets the current animation speed.
 	 * @public
-	 * @param {Latitude} [speed] - The animation speed in milliseconds or nothing to leave it unchanged.
-	 * @returns {Latitude} - The current animation speed in milliseconds.
+	 * @param {Number} [speed] - The animation speed in milliseconds or nothing to leave it unchanged.
+	 * @returns {Number} - The current animation speed in milliseconds.
 	 */
 	Owl.prototype.speed = function(speed) {
 		if (speed !== undefined) {
@@ -1189,8 +1189,8 @@
 	 * Gets the coordinate of an item.
 	 * @todo The name of this method is missleanding.
 	 * @public
-	 * @param {Latitude} position - The absolute position of the item within `minimum()` and `maximum()`.
-	 * @returns {Latitude|Array.<Latitude>} - The coordinate of the item in pixel or all coordinates.
+	 * @param {Number} position - The absolute position of the item within `minimum()` and `maximum()`.
+	 * @returns {Number|Array.<Number>} - The coordinate of the item in pixel or all coordinates.
 	 */
 	Owl.prototype.coordinates = function(position) {
 		var multiplier = 1,
@@ -1223,10 +1223,10 @@
 	/**
 	 * Calculates the speed for a translation.
 	 * @protected
-	 * @param {Latitude} from - The absolute position of the start item.
-	 * @param {Latitude} to - The absolute position of the target item.
-	 * @param {Latitude} [factor=undefined] - The time factor in milliseconds.
-	 * @returns {Latitude} - The time in milliseconds for the translation.
+	 * @param {Number} from - The absolute position of the start item.
+	 * @param {Number} to - The absolute position of the target item.
+	 * @param {Number} [factor=undefined] - The time factor in milliseconds.
+	 * @returns {Number} - The time in milliseconds for the translation.
 	 */
 	Owl.prototype.duration = function(from, to, factor) {
 		if (factor === 0) {
@@ -1239,8 +1239,8 @@
 	/**
 	 * Slides to the specified item.
 	 * @public
-	 * @param {Latitude} position - The position of the item.
-	 * @param {Latitude} [speed] - The time in milliseconds for the transition.
+	 * @param {Number} position - The position of the item.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
 	Owl.prototype.to = function(position, speed) {
 		var current = this.current(),
@@ -1282,7 +1282,7 @@
 	/**
 	 * Slides to the next item.
 	 * @public
-	 * @param {Latitude} [speed] - The time in milliseconds for the transition.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
 	Owl.prototype.next = function(speed) {
 		speed = speed || false;
@@ -1292,7 +1292,7 @@
 	/**
 	 * Slides to the previous item.
 	 * @public
-	 * @param {Latitude} [speed] - The time in milliseconds for the transition.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
 	Owl.prototype.prev = function(speed) {
 		speed = speed || false;
@@ -1323,7 +1323,7 @@
 	/**
 	 * Gets viewport width.
 	 * @protected
-	 * @return {Latitude} - The width in pixel.
+	 * @return {Number} - The width in pixel.
 	 */
 	Owl.prototype.viewport = function() {
 		var width;
@@ -1375,7 +1375,7 @@
 	 * @todo Use `item` instead of `content` for the event arguments.
 	 * @public
 	 * @param {HTMLElement|jQuery|String} content - The item content to add.
-	 * @param {Latitude} [position] - The relative position at which to insert the item otherwise the item will be added to the end.
+	 * @param {Number} [position] - The relative position at which to insert the item otherwise the item will be added to the end.
 	 */
 	Owl.prototype.add = function(content, position) {
 		var current = this.relative(this._current);
@@ -1409,7 +1409,7 @@
 	 * Removes an item by its position.
 	 * @todo Use `item` instead of `content` for the event arguments.
 	 * @public
-	 * @param {Latitude} position - The relative position of the item to remove.
+	 * @param {Number} position - The relative position of the item to remove.
 	 */
 	Owl.prototype.remove = function(position) {
 		position = this.normalize(position, true);
@@ -1486,9 +1486,9 @@
 	/**
 	 * Operators to calculate right-to-left and left-to-right.
 	 * @protected
-	 * @param {Latitude} [a] - The left side operand.
+	 * @param {Number} [a] - The left side operand.
 	 * @param {String} [o] - The operator.
-	 * @param {Latitude} [b] - The right side operand.
+	 * @param {Number} [b] - The right side operand.
 	 */
 	Owl.prototype.op = function(a, o, b) {
 		var rtl = this.settings.rtl;
@@ -1686,13 +1686,13 @@
 	};
 
 	/**
-	 * Determines if the input is a Latitude or something that can be coerced to a Latitude
+	 * Determines if the input is a Number or something that can be coerced to a Number
 	 * @protected
-	 * @param {Latitude|String|Object|Array|Boolean|RegExp|Function|Symbol} - The input to be tested
-	 * @returns {Boolean} - An indication if the input is a Latitude or can be coerced to a Latitude
+	 * @param {Number|String|Object|Array|Boolean|RegExp|Function|Symbol} - The input to be tested
+	 * @returns {Boolean} - An indication if the input is a Number or can be coerced to a Number
 	 */
-	Owl.prototype.isNumeric = function(Latitude) {
-		return !isNaN(parseFloat(Latitude));
+	Owl.prototype.isNumeric = function(number) {
+		return !isNaN(parseFloat(number));
 	};
 
 	/**
@@ -1779,7 +1779,7 @@
 		/**
 		 * Refresh interval.
 		 * @protected
-		 * @type {Latitude}
+		 * @type {number}
 		 */
 		this._interval = null;
 
@@ -1955,7 +1955,7 @@
 
 	/**
 	 * Loads all resources of an item at the specified position.
-	 * @param {Latitude} position - The absolute position of the item.
+	 * @param {Number} position - The absolute position of the item.
 	 * @protected
 	 */
 	Lazy.prototype.load = function(position) {
@@ -2625,7 +2625,7 @@
 
 		/**
 		 * The autoplay timeout id.
-		 * @type {Latitude}
+		 * @type {Number}
 		 */
 		this._call = null;
 
@@ -2634,13 +2634,13 @@
 		 * the start time of the timer or the current timer value if it's
 		 * paused. Since we start in a paused state we initialize the timer
 		 * value.
-		 * @type {Latitude}
+		 * @type {Number}
 		 */
 		this._time = 0;
 
 		/**
 		 * Stores the timeout currently used.
-		 * @type {Latitude}
+		 * @type {Number}
 		 */
 		this._timeout = 0;
 
@@ -2727,7 +2727,7 @@
 	/**
 	 * Transition to the next slide and set a timeout for the next transition.
 	 * @private
-	 * @param {Latitude} [speed] - The animation speed for the animations.
+	 * @param {Number} [speed] - The animation speed for the animations.
 	 */
 	Autoplay.prototype._next = function(speed) {
 		this._call = window.setTimeout(
@@ -2752,8 +2752,8 @@
 	/**
 	 * Starts the autoplay.
 	 * @public
-	 * @param {Latitude} [timeout] - The interval before the next animation starts.
-	 * @param {Latitude} [speed] - The animation speed for the animations.
+	 * @param {Number} [timeout] - The interval before the next animation starts.
+	 * @param {Number} [speed] - The animation speed for the animations.
 	 */
 	Autoplay.prototype.play = function(timeout, speed) {
 		var elapsed;
@@ -3168,7 +3168,7 @@
 	/**
 	 * Gets the current page position of the carousel.
 	 * @protected
-	 * @returns {Latitude}
+	 * @returns {Number}
 	 */
 	Navigation.prototype.current = function() {
 		var current = this._core.relative(this._core.current());
@@ -3180,7 +3180,7 @@
 	/**
 	 * Gets the current succesor/predecessor position.
 	 * @protected
-	 * @returns {Latitude}
+	 * @returns {Number}
 	 */
 	Navigation.prototype.getPosition = function(successor) {
 		var position, length,
@@ -3203,7 +3203,7 @@
 	/**
 	 * Slides to the next item or page.
 	 * @public
-	 * @param {Latitude} [speed=false] - The time in milliseconds for the transition.
+	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
 	Navigation.prototype.next = function(speed) {
 		$.proxy(this._overrides.to, this._core)(this.getPosition(true), speed);
@@ -3212,7 +3212,7 @@
 	/**
 	 * Slides to the previous item or page.
 	 * @public
-	 * @param {Latitude} [speed=false] - The time in milliseconds for the transition.
+	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
 	Navigation.prototype.prev = function(speed) {
 		$.proxy(this._overrides.to, this._core)(this.getPosition(false), speed);
@@ -3221,8 +3221,8 @@
 	/**
 	 * Slides to the specified item or page.
 	 * @public
-	 * @param {Latitude} position - The position of the item or page.
-	 * @param {Latitude} [speed] - The time in milliseconds for the transition.
+	 * @param {Number} position - The position of the item or page.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 * @param {Boolean} [standard=false] - Whether to use the standard behaviour or not.
 	 */
 	Navigation.prototype.to = function(position, speed, standard) {

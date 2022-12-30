@@ -13,7 +13,7 @@
 <body class="bg-danger">
 
 
- <h3 class="text-center"><span>Edit Student Details</span> </h3>
+ <h3 class="text-center"><span>Edit Accelerometer Sensor Details</span> </h3>
   
 {% with messages=get_flashed_messages(with_categories=true) %}
 {% if messages %}
@@ -38,20 +38,20 @@
 <form action="/edit/{{posts.id}}" method="post">
 <div class="form-group">
 
-<label for="X">Roll Latitude</label>
-<input type="text" class="form-control" name="X" id="X" value={{posts.X}} >
+<label for="XAxis">X Axis</label>
+<input type="text" class="form-control" name="XAxis" id="XAxis" value={{posts.XAxis}} >
 </div>
 <br>
 <div class="form-group">
 
-<label for="Y">Student Name</label>
-<input type="text" class="form-control" name="Y" id="Y" value={{posts.Y}} >
+<label for="sname">Student Name</label>
+<input type="text" class="form-control" name="sname" id="sname" value={{posts.sname}} >
 </div>
 <br>
 <div class="form-group">
 
-<label for="Z">Z</label>
-<input type="Latitude" class="form-control" name="Z" id="Z" value={{posts.Z}} >
+<label for="sem">Sem</label>
+<input type="number" class="form-control" name="sem" id="sem" value={{posts.sem}} >
 </div>
 <br>
 <div class="form-group">                          
@@ -81,14 +81,14 @@
 </div>
 <br>
 <div class="form-group">
-<label for="num">Phone Latitude</label>
-<input type="Latitude" class="form-control" name="num" id="num" value={{posts.Latitude}} >
+<label for="num">Phone Number</label>
+<input type="number" class="form-control" name="num" id="num" value={{posts.number}} >
 </div>
 <br>
 
 <div class="form-group">
-<label for="Longitude">Longitude</label>
-<input type="text"class="form-control" name="Longitude" id="Longitude" value={{posts.Longitude}}>
+<label for="address">Address</label>
+<input type="text"class="form-control" name="address" id="address" value={{posts.address}}>
 </div>
 <br>
   

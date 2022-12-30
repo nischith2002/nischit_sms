@@ -23,7 +23,7 @@ def load_user(user_id):
 
 
 # app.config['SQLALCHEMY_DATABASE_URL']='mysql://username:password@localhost/databas_table_name'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:@localhost/thisdb222'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:@localhost/students'
 db=SQLAlchemy(app)
 
 # here we will create db models that is tables
@@ -38,12 +38,12 @@ class Department(db.Model):
 
 class Attendence(db.Model):
     aid=db.Column(db.Integer,primary_key=True)
-    X=db.Column(db.String(100))
+    XAxis=db.Column(db.String(100))
     attendance=db.Column(db.Integer())
 
 class Trig(db.Model):
     tid=db.Column(db.Integer,primary_key=True)
-    X=db.Column(db.String(100))
+    XAxis=db.Column(db.String(100))
     action=db.Column(db.String(100))
     timestamp=db.Column(db.String(100))
 
@@ -60,24 +60,24 @@ class User(UserMixin,db.Model):
 
 class Student(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    X=db.Column(db.String(50))
-    Y=db.Column(db.String(50))
-    Z=db.Column(db.Integer)
+    XAxis=db.Column(db.String(50))
+    sname=db.Column(db.String(50))
+    sem=db.Column(db.Integer)
     gender=db.Column(db.String(50))
     branch=db.Column(db.String(50))
     email=db.Column(db.String(50))
-    Latitude=db.Column(db.String(12))
-    Longitude=db.Column(db.String(100))
+    number=db.Column(db.String(12))
+    address=db.Column(db.String(100))
     
 
 @app.route('/')
 def index(): 
     return render_template('index.html')
 
-@app.route('/studentdetails')
-def studentdetails():
+@app.route('/accelerometerdetails')
+def accelerometerdetails():
     query=db.engine.execute(f"SELECT * FROM `student`") 
-    return render_template('studentdetails.html',query=query)
+    return render_template('accelerometerdetails.html',query=query)
 
 @app.route('/triggers')
 def triggers():
@@ -102,10 +102,10 @@ def department():
 def addattendance():
     query=db.engine.execute(f"SELECT * FROM `student`") 
     if request.method=="POST":
-        X=request.form.get('X')
+        XAxis=request.form.get('XAxis')
         attend=request.form.get('attend')
-        print(attend,X)
-        atte=Attendence(X=X,attendance=attend)
+        print(attend,XAxis)
+        atte=Attendence(XAxis=XAxis,attendance=attend)
         db.session.add(atte)
         db.session.commit()
         flash("Attendance added","warning")
@@ -116,9 +116,9 @@ def addattendance():
 @app.route('/search',methods=['POST','GET'])
 def search():
     if request.method=="POST":
-        X=request.form.get('roll')
-        bio=Student.query.filter_by(X=X).first()
-        attend=Attendence.query.filter_by(X=X).first()
+        XAxis=request.form.get('x')
+        bio=Student.query.filter_by(XAxis=XAxis).first()
+        attend=Attendence.query.filter_by(XAxis=XAxis).first()
         return render_template('search.html',bio=bio,attend=attend)
         
     return render_template('search.html')
@@ -128,7 +128,7 @@ def search():
 def delete(id):
     db.engine.execute(f"DELETE FROM `student` WHERE `student`.`id`={id}")
     flash("Slot Deleted Successful","danger")
-    return redirect('/studentdetails')
+    return redirect('/accelerometerdetails')
 
 
 @app.route("/edit/<string:id>",methods=['POST','GET'])
@@ -137,17 +137,17 @@ def edit(id):
     dept=db.engine.execute("SELECT * FROM `department`")
     posts=Student.query.filter_by(id=id).first()
     if request.method=="POST":
-        X=request.form.get('X')
-        Y=request.form.get('Y')
-        Z=request.form.get('Z')
+        XAxis=request.form.get('XAxis')
+        sname=request.form.get('sname')
+        sem=request.form.get('sem')
         gender=request.form.get('gender')
         branch=request.form.get('branch')
         email=request.form.get('email')
         num=request.form.get('num')
-        Longitude=request.form.get('Longitude')
-        query=db.engine.execute(f"UPDATE `student` SET `X`='{X}',`Y`='{Y}',`Z`='{Z}',`gender`='{gender}',`branch`='{branch}',`email`='{email}',`Latitude`='{num}',`Longitude`='{Longitude}'")
+        address=request.form.get('address')
+        query=db.engine.execute(f"UPDATE `student` SET `XAxis`='{XAxis}',`sname`='{sname}',`sem`='{sem}',`gender`='{gender}',`branch`='{branch}',`email`='{email}',`number`='{num}',`address`='{address}'")
         flash("Slot is Updates","success")
-        return redirect('/studentdetails')
+        return redirect('/accelerometerdetails')
     
     return render_template('edit.html',posts=posts,dept=dept)
 
@@ -203,26 +203,26 @@ def logout():
 
 
 
-@app.route('/addstudent',methods=['POST','GET'])
+@app.route('/addaccelerometer',methods=['POST','GET'])
 @login_required
-def addstudent():
+def addaccelerometer():
     dept=db.engine.execute("SELECT * FROM `department`")
     if request.method=="POST":
-        X=request.form.get('X')
-        Y=request.form.get('Y')
-        Z=request.form.get('Z')
+        XAxis=request.form.get('XAxis')
+        sname=request.form.get('sname')
+        sem=request.form.get('sem')
         gender=request.form.get('gender')
         branch=request.form.get('branch')
         email=request.form.get('email')
         num=request.form.get('num')
-        Longitude=request.form.get('Longitude')
-        query=db.engine.execute(f"INSERT INTO `student` (`X`,`Y`,`Z`,`gender`,`branch`,`email`,`Latitude`,`Longitude`) VALUES ('{X}','{Y}','{Z}','{gender}','{branch}','{email}','{num}','{Longitude}')")
+        address=request.form.get('address')
+        query=db.engine.execute(f"INSERT INTO `student` (`XAxis`,`sname`,`sem`,`gender`,`branch`,`email`,`number`,`address`) VALUES ('{XAxis}','{sname}','{sem}','{gender}','{branch}','{email}','{num}','{address}')")
     
 
         flash("Booking Confirmed","info")
 
 
-    return render_template('student.html',dept=dept)
+    return render_template('accelerometer.html',dept=dept)
 @app.route('/test')
 def test():
     try:
